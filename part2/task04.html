@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Js task04</title>
+    <style>
+        li{
+            display: inline-block;
+            color: #fff;
+            background: #f00;
+            padding:10px;
+            margin:0 5px;
+        }
+    </style>
+</head>
+<body>
+<!--队列的每个元素是一个数字，初始队列为空
+有一个input输入框，以及4个操作按钮
+
+点击"左侧入"，将input中输入的数字从左侧插入队列中；
+点击"右侧入"，将input中输入的数字从右侧插入队列中；
+点击"左侧出"，读取并删除队列左侧第一个元素，并弹窗显示元素中数值；
+点击"右侧出"，读取并删除队列又侧第一个元素，并弹窗显示元素中数值；
+-->
+
+<input type="text" id="text">
+<button id="btn-left-in">左侧入</button>
+<button id="btn-right-in">右侧入</button>
+<button id="btn-left-out">左侧出</button>
+<button id="btn-right-out">右侧出</button>
+<ul id="queue"></ul>
+
+<script>
+    var btn1 = document.getElementById("btn-left-in");//选择按钮"左侧入"
+    var btn2 = document.getElementById("btn-right-in");//选择按钮"右侧入"
+    var btn3 = document.getElementById("btn-left-out");//选择按钮"左侧出"
+    var btn4 = document.getElementById("btn-right-out");//选择按钮"右侧出"
+    var list = document.getElementById("queue");
+    var arr = [];
+
+    btn1.onclick=function () {
+        var num = document.getElementById("text").value;//选择input输入的内容
+        if(num==""){
+            alert("请输入一个数！");
+        }else if(!isNaN(num)){
+            var oli = document.createElement("li");
+            oli.innerHTML=num;
+            list.insertBefore(oli, list.firstChild);
+            num = "";
+        }else {
+            alert("格式错误，请输入一个数字！")
+        }
+    }
+
+    btn2.onclick=function () {
+        var num = document.getElementById("text").value;//选择input输入的内容
+        if(num==""){
+            alert("请输入一个数！");
+        }else if(!isNaN(num)){
+            var oli = document.createElement("li");
+            oli.innerHTML=num;
+            list.appendChild(oli);
+            num = "";
+        }else {
+            alert("格式错误，请输入一个数字！")
+        }
+    }
+    btn3.onclick=function () {
+        var oLis = list.getElementsByTagName("li");
+        if(confirm("该值为"+oLis[0].innerHTML+"你确定要删除？")){
+            oLis[0].remove();
+        }else {
+            alert("取消删除！");
+        }
+    }
+    btn4.onclick=function () {
+        var oLis = list.getElementsByTagName("li");
+        if(confirm("该值为"+oLis[oLis.length-1].innerHTML+"你确定要删除？")){
+            oLis[oLis.length-1].remove();
+        }else {
+            alert("取消删除！");
+        }
+    }
+/*点击队列中任何一个元素，则该元素会被从队列中删除*/
+    list.addEventListener("click",function (e) {
+        if(e.target.nodeName.toLowerCase()=="li")
+        {
+            //console.log(event.target);
+            list.removeChild(e.target);
+        }
+    })
+</script>
+</body>
+</html>
+
