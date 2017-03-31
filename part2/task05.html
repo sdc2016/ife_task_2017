@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Js task05</title>
+    <style>
+        ul{
+            height:100px;
+        }
+        li{
+            display: inline-block;
+            float: left;
+
+            color: #fff;
+            background: #f00;
+            padding:10px;
+            margin:0 5px;
+            /*bottom: 0;*/
+        }
+    </style>
+</head>
+<body>
+<!--基于上一任务
+限制输入的数字在10-100
+队列元素数量最多限制为60个，当超过60个时，添加元素时alert出提示
+队列展现方式变化如图，直接用高度表示数字大小
+实现一个简单的排序功能，如冒泡排序（不限制具体算法），用可视化的方法表达出来
+-->
+
+<input type="text" id="text">
+<button id="btn-left-in">左侧入</button>
+<button id="btn-right-in">右侧入</button>
+<button id="btn-left-out">左侧出</button>
+<button id="btn-right-out">右侧出</button>
+<button id="btn-sort">排序</button>
+<ul id="queue"></ul>
+
+<script>
+    var btn1 = document.getElementById("btn-left-in");//选择按钮"左侧入"
+    var btn2 = document.getElementById("btn-right-in");//选择按钮"右侧入"
+    var btn3 = document.getElementById("btn-left-out");//选择按钮"左侧出"
+    var btn4 = document.getElementById("btn-right-out");//选择按钮"右侧出"
+    var btnSort = document.getElementById("btn-sort");//选择按钮"排序"
+    var list = document.getElementById("queue");
+    var arr = [];//存放排序时每个li的innerHTML
+    var count=0;//计算li的个数
+
+    btn1.onclick=function () {
+        var num = document.getElementById("text").value;//选择input输入的内容
+        if(num==""){
+            alert("请输入一个10-100的数！");
+        }else if(!isNaN(num)){
+            if(num>9 && num<101){
+                count=count+1;
+                if(count>60) alert("超出60个，已至上限！");
+                var oli = document.createElement("li");
+                oli.innerHTML=num;
+                oli.style.height = num + 'px';
+                list.insertBefore(oli, list.firstChild);
+            }else {
+                alert("请输入一个10-100的数！");
+            }
+        }else {
+            alert("格式错误，请输入一个10-100的数！")
+        }
+    }
+
+    btn2.onclick=function () {
+        var num = document.getElementById("text").value;//选择input输入的内容
+        if(num==""){
+            alert("请输入一个10-100的数！");
+        }else if(!isNaN(num)){
+            if(num>9 && num<101){
+                count=count+1;
+                if(count>60) alert("超出60个，已至上限！");
+                var oli = document.createElement("li");
+                oli.innerHTML=num;
+                oli.style.height = num + 'px';
+                list.appendChild(oli);
+            }else {
+                alert("请输入一个10-100的数！");
+            }
+        }else {
+            alert("格式错误，请输入一个10-100的数！")
+        }
+    }
+    btn3.onclick=function () {
+        var oLis = list.getElementsByTagName("li");
+        if(confirm("该值为"+oLis[0].innerHTML+"你确定要删除？")){
+            oLis[0].remove();
+            count=count-1;
+        }else {
+            alert("取消删除！");
+        }
+    }
+    btn4.onclick=function () {
+        var oLis = list.getElementsByTagName("li");
+        if(confirm("该值为"+oLis[oLis.length-1].innerHTML+"你确定要删除？")){
+            oLis[oLis.length-1].remove();
+            count=count-1;
+        }else {
+            alert("取消删除！");
+        }
+    }
+    /*点击队列中任何一个元素，则该元素会被从队列中删除*/
+    list.addEventListener("click",function (e) {
+        if(e.target.nodeName.toLowerCase()=="li")
+        {
+            //console.log(event.target);
+            list.removeChild(e.target);
+            count=count-1;
+        }
+    })
+
+    /*实现一个简单的排序功能，如冒泡排序（不限制具体算法），用可视化的方法表达出来*/
+    function insertSort(arr) {//插入排序
+        if(arr.length<=1) {
+            return arr;
+        }
+        for(var i=0;i<arr.length;i++) {
+            for(var j=i-1;j>=0;j--) {
+                if(arr[j+1]<arr[j]){
+                    var temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+    btnSort.onclick=function () {
+        var oLis = list.getElementsByTagName("li");
+        for(let i=0;i<oLis.length;i++) {
+            arr.push(oLis[i].innerHTML);
+        }
+        arr=insertSort(arr);//调用排序算法
+
+        list.innerHTML = "";//清空列表
+        for(let i=0;i<arr.length;i++) {//循环添加li节点
+            var oLi = document.createElement("li");
+            oLi.innerHTML = arr[i];
+            oLi.style.height = arr[i] + 'px';
+            list.appendChild(oLi);
+        }
+        arr = [];//arr数组必须清空，否则会在原来的基础上增加
+    }
+
+</script>
+</body>
+</html>
+
