@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>任务五：基础JavaScript练习（二）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin: 10px auto;
+            text-align: center;
+        }
+
+        .container {
+            width: 93%;
+            margin: 10px auto;
+            padding: 30px;
+            box-shadow: 0 0 10px #8d8d8d;
+        }
+
+        .control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control input {
+            height: 2em;
+            border-radius: 5px;
+            border: 1px solid #6d6d6d;
+            margin-right: 10px;
+            text-indent: 1em;
+            transition: box-shadow .1s;
+        }
+
+        .control input:focus {
+            box-shadow: 0 0 10px rgba(3,169,244,.5);
+        }
+
+        .btn {
+            display: inline-block;
+            border: 1px solid #8e8e8e;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 10px;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        .btn:hover {
+            background-color: darkgray;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+        }
+
+        .panel {
+            width: 100%;
+            min-height: 400px;
+            margin: 20px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .item {
+            box-sizing: border-box;
+            /* height由给予的数字动态计算 */
+            border: 1px solid white;
+            border-radius: 5px 5px 0 0;
+            background-color: bisque;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            transition: border .3s;
+        }
+
+        .item:hover {
+            border: 1px solid #8c8c8c;
+            box-shadow: 0 0 5px #e0e0e0;
+        }
+
+        .item:nth-child(5n+1) {
+            background-color: cadetblue;
+        }
+
+        .item:nth-child(5n+2) {
+            background-color: bisque;
+        }
+
+        .item:nth-child(5n+3) {
+            background-color: cornflowerblue;
+        }
+
+        .item:nth-child(5n+4) {
+            background-color: darkseagreen;
+        }
+
+        .item:nth-child(5n+2) {
+            background-color: darkkhaki;
+        }
+
+        @keyframes grow {
+            from {
+                transform: scaleY(0);
+            }
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        .grow {
+            transform-origin: bottom;
+            animation: grow 1s;
+        }
+
+        @keyframes shrink {
+            from {
+                transform: scaleY(1);
+            }
+            to {
+                transform: scaleY(0);
+                visibility: hidden;
+            }
+        }
+
+        .shrink {
+            transform-origin: bottom;
+            animation: shrink .6s;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>数据展示</h1>
+
+<div class="container">
+    <div class="control">
+        <input type="text" id="data" placeholder="10-100之间">
+        <a href="#!" class="btn" id="left-in">左侧入</a>
+        <a href="#!" class="btn" id="right-in">右侧入</a>
+        <a href="#!" class="btn" id="left-out">左侧出</a>
+        <a href="#!" class="btn" id="right-out">右侧出</a>
+        <a href="#!" class="btn" id="sort" title="从低到高">排序</a>
+        <a href="#!" class="btn" id="clear">清空</a>
+        <a href="#!" class="btn" id="init">初始化</a>
+    </div>
+    <div class="divider"></div>
+    <div class="panel" id="panel"></div>
+</div>
+
+<script>
+    /* 左侧入按钮事件处理程序 */
+    function leftIn() {
+
+        var item = createItem();
+        item.classList.add("grow");
+
+        var panel = document.getElementById("panel");
+
+        if (panel.childElementCount >= 60) {
+            alert("最多添加60条数据");
+            return false;
+        }
+
+        panel.insertBefore(item, panel.firstElementChild);
+
+        return false;
+    }
+
+    /* 右侧入按钮事件处理程序 */
+    function rightIn() {
+
+        var item = createItem();
+        item.classList.add("grow");
+
+        var panel = document.getElementById("panel");
+
+        if (panel.childElementCount >= 60) {
+            alert("最多添加60条数据");
+            return false;
+        }
+
+        panel.appendChild(item);
+
+        return false;
+    }
+
+    /* 左侧出按钮事件处理程序 */
+    function leftOut() {
+
+        var panel = document.getElementById("panel");
+        panel.firstElementChild.classList.add("shrink");
+
+        var handler = setTimeout(function () {
+
+            panel.removeChild(panel.firstElementChild);
+            clearTimeout(handler);
+
+        }, 600);
+
+        return false;
+    }
+
+    /* 右侧出按钮事件处理程序 */
+    function rightOut() {
+
+        var panel = document.getElementById("panel");
+        panel.lastElementChild.classList.add("shrink");
+
+        var handler = setTimeout(function () {
+
+            panel.removeChild(panel.lastElementChild);
+            clearTimeout(handler);
+
+        }, 600);
+
+        return false;
+    }
+
+    /* 清空按钮事件处理程序 */
+    function clear() {
+
+        document.getElementById("panel").innerHTML = "";
+    }
+
+    /* 清空动画效果 */
+    function clearAnimation() {
+
+        var items = document.getElementById("panel").childNodes;
+
+        for (var i = 0; i < items.length; i++) {
+            items[i].classList.remove("grow");
+        }
+    }
+
+    /* 排序按钮的事件处理程序（使用冒泡排序） */
+    function sort() {
+
+        var panel = document.getElementById("panel");
+        var itemArray = new Array();
+
+        var item;
+        var a, b;
+
+        // 获取item数组
+        for (var i = 0; i < panel.childNodes.length; i++)
+            itemArray[i] = panel.childNodes[i];
+
+        // 用 setInterval 函数代替for循环来遍历排序
+        i = 0;
+        var handler = setInterval(function () {
+
+            if (i >= itemArray.length - 1) {
+                clearInterval(handler);
+            }
+
+            var flag = 0; // 若一轮比较未发生交换，则说明顺序已排好，flag 为判断是否发生交换的标记
+
+            for (var j = 0; j < itemArray.length - i - 1; j++) {
+
+                a = parseInt(itemArray[j].innerHTML);
+                b = parseInt(itemArray[j + 1].innerHTML);
+
+                if (a > b) {
+
+                    clearAnimation();
+                    panel.insertBefore(itemArray[j + 1], itemArray[j]);
+                    itemArray[j + 1].classList.add("grow");
+
+                    item = itemArray[j + 1];
+                    itemArray[j + 1] = itemArray[j];
+                    itemArray[j] = item;
+
+                    flag = 1;
+                }
+            }
+
+            i++;
+
+            if (flag == 1) flag = 0;
+            else clearInterval(handler);
+
+        }, 500);
+
+        return false;
+    }
+
+    /* 队列item被点击时的事件处理程序 */
+    function removeItem() {
+
+        var item = this;
+        var panel = document.getElementById("panel");
+
+        // 传统方式处理类好麻烦
+        var classes = item.className.split(" ");
+        classes.push("shrink");
+        item.className = classes.join(" ");
+
+        var handler = setTimeout(function () {
+
+            panel.removeChild(item);
+            clearTimeout(handler);
+
+        }, 600);
+
+    }
+
+    /* 为按钮绑定事件 */
+    function bindEventForBtn() {
+
+        document.getElementById("left-in").onclick = leftIn;
+        document.getElementById("right-in").onclick = rightIn;
+        document.getElementById("left-out").onclick = leftOut;
+        document.getElementById("right-out").onclick = rightOut;
+        document.getElementById("sort").onclick = sort;
+        document.getElementById("clear").onclick = clear;
+        document.getElementById("init").onclick = init;
+
+    }
+
+    /* 为队列item绑定事件 */
+    function bindEventForItem(item) {
+
+        item.onclick = removeItem;
+
+    }
+
+    /* 创建一个item */
+    function createItem(height) {
+
+        var item = document.createElement("div");
+        var text = document.getElementById("data").value; // 获取输入框的文本
+
+        if (height)
+            text = height + "";
+        else {
+            // 验证表单输入是否为数字
+            if (text == "" || isNaN(text)) {
+                alert("必需为数字");
+                return null;
+            }
+        }
+
+        var num = parseInt(text);
+        if (num < 10 || num > 100) {
+            alert("数字必需在10-100之间");
+            return null;
+        }
+
+        // 为 item 设置合适的高度
+        num = 3.9 * num;
+        item.style.height = num + "px";
+
+        document.getElementById("data").value = "";
+        item.className = "item";
+        item.setAttribute("title", "点击删除");
+        item.innerHTML = text;
+        bindEventForItem(item);
+
+        return item;
+    }
+
+    /* 初始化页面，创建几个item */
+    function init() {
+
+        var item, num;
+        var panel = document.getElementById("panel");
+
+        if (panel.childElementCount >= 60) {
+            alert("最多添加60条数据");
+            return false;
+        }
+
+        for (var i = 0; i < 10; i++) {
+            num = Math.floor(Math.random() * 100 % 100);//生成1-99的数
+            if (num < 10)
+                num += 10;
+            item = createItem(num);
+
+            panel.appendChild(item);
+        }
+
+    }
+
+    window.onload = function () {
+        init();
+        bindEventForBtn();
+    }
+</script>
+
+</body>
+
+</html>
