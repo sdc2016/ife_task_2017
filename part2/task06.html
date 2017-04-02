@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS task06</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin: 10px auto;
+            text-align: center;
+        }
+
+        .container {
+            width: 93%;
+            margin: 10px auto;
+            padding: 30px;
+            box-shadow: 0 0 10px #8d8d8d;
+        }
+
+        .control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .control input {
+            height: 2.5em;
+        }
+
+        .control input,textarea{
+            width:15em;
+            border-radius: 5px;
+            border: 1px solid #6d6d6d;
+            margin-right: 10px;
+            text-indent: 1em;
+            transition: box-shadow .1s;
+        }
+
+        .control input:focus,textarea:focus {
+            box-shadow: 0 0 10px rgba(3,169,244,.5);
+        }
+
+        .control textarea{
+            height:5em;
+        }
+
+        .control a{
+            width:5em;/*button的宽度保持一致*/
+            height:1.5em;/*高度*/
+            line-height: 1.5em;/*使得文字位置垂直居中*/
+        }
+
+        .btn {
+            display: inline-block;
+            border: 1px solid #8e8e8e;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 10px;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        .btn:hover {
+            background-color: darkgray;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+        }
+
+        .panel {
+            width: 100%;
+            min-height: 400px;
+            margin: 20px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;/*弹性布局*/
+            align-items: flex-end;/*底部对齐*/
+            justify-content: center;/*水平居中对齐*/
+            overflow: auto;
+        }
+
+        .item {
+            box-sizing: border-box;/*为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制。*/
+            /* height由给予的数字动态计算 */
+            border: 1px solid white;
+            border-radius: 5px 5px 0 0;
+            background-color: bisque;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            transition: border .3s;
+        }
+
+        .item:hover {
+            border: 1px solid #8c8c8c;
+            box-shadow: 0 0 5px #e0e0e0;
+        }
+
+        .item:nth-child(5n+1) {
+            background-color: cadetblue;
+        }
+
+        .item:nth-child(5n+2) {
+            background-color: bisque;
+        }
+
+        .item:nth-child(5n+3) {
+            background-color: cornflowerblue;
+        }
+
+        .item:nth-child(5n+4) {
+            background-color: darkseagreen;
+        }
+
+        .item:nth-child(5n+2) {
+            background-color: darkkhaki;
+        }
+
+        @keyframes grow {
+            from {
+                transform: scaleY(0);
+            }
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        .grow {
+            transform-origin: bottom;
+            animation: grow 1s;
+        }
+
+        @keyframes shrink {
+            from {
+                transform: scaleY(1);
+            }
+            to {
+                transform: scaleY(0);
+                visibility: hidden;
+            }
+        }
+
+        .shrink {
+            transform-origin: bottom;
+            animation: shrink .6s;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>数据展示</h1>
+
+<div class="container">
+    <div class="control">
+        <textarea id="data" cols="15" rows="5" placeholder="输入想要插入的数据" title="允许数字、中文、英文，可通过用回车，逗号，顿号，空格等符号作为间隔"></textarea>
+        <a href="#!" class="btn" id="left-in">左侧入</a>
+        <a href="#!" class="btn" id="right-in">右侧入</a>
+        <a href="#!" class="btn" id="left-out">左侧出</a>
+        <a href="#!" class="btn" id="right-out">右侧出</a>
+    </div>
+    <div class="control">
+        <input type="text" id="search" placeholder="输入想要查询的内容">
+        <a href="#!" class="btn" id="sort" title="从低到高">排序</a>
+        <a href="#!" class="btn" id="find">搜索</a>
+        <a href="#!" class="btn" id="clear">清空</a>
+        <a href="#!" class="btn" id="init">初始化</a>
+    </div>
+    <div class="divider"></div>
+    <div class="panel" id="panel"></div>
+</div>
+
+<script>
+    /* 左侧入按钮事件处理程序 */
+    function leftIn() {
+
+        var itemArray = createItem();
+        var panel = document.getElementById("panel");
+        itemArray.forEach(function (item, index, array) {
+            item.classList.add("grow");
+            if (panel.childElementCount >= 60) {
+                alert("最多添加60条数据");
+                return false;
+            }
+            panel.insertBefore(item, panel.firstElementChild);
+        })
+
+        return false;
+    }
+
+    /* 右侧入按钮事件处理程序 */
+    function rightIn() {
+
+        var itemArray = createItem();
+        var panel = document.getElementById("panel");
+        itemArray.forEach(function (item, index, array) {
+            item.classList.add("grow");
+            if (panel.childElementCount >= 60) {
+                alert("最多添加60条数据");
+                return false;
+            }
+            panel.appendChild(item);
+        })
+
+        return false;
+    }
+
+    /* 左侧出按钮事件处理程序 */
+    function leftOut() {
+
+        var panel = document.getElementById("panel");
+        panel.firstElementChild.classList.add("shrink");
+
+        var handler = setTimeout(function () {
+
+            panel.removeChild(panel.firstElementChild);
+            clearTimeout(handler);
+
+        }, 600);
+
+        return false;
+    }
+
+    /* 右侧出按钮事件处理程序 */
+    function rightOut() {
+
+        var panel = document.getElementById("panel");
+        panel.lastElementChild.classList.add("shrink");
+
+        var handler = setTimeout(function () {
+
+            panel.removeChild(panel.lastElementChild);
+            clearTimeout(handler);
+
+        }, 600);
+
+        return false;
+    }
+
+    /* 清空按钮事件处理程序 */
+    function clear() {
+
+        document.getElementById("panel").innerHTML = "";
+    }
+
+    /* 清空动画效果 */
+    function clearAnimation() {
+
+        var items = document.getElementById("panel").childNodes;
+
+        for (var i = 0; i < items.length; i++) {
+            items[i].classList.remove("grow");
+        }
+    }
+
+    /* 排序按钮的事件处理程序（使用冒泡排序） */
+    function sort() {
+
+        var panel = document.getElementById("panel");
+        var itemArray = new Array();
+
+        var item;
+        var a, b;
+
+        // 获取item数组
+        for (var i = 0; i < panel.childNodes.length; i++)
+            itemArray[i] = panel.childNodes[i];
+
+        // 用 setInterval 函数代替for循环来遍历排序
+        i = 0;
+        var handler = setInterval(function () {
+
+            if (i >= itemArray.length - 1) {
+                clearInterval(handler);
+            }
+
+            var flag = 0; // 若一轮比较未发生交换，则说明顺序已排好，flag 为判断是否发生交换的标记
+
+            for (var j = 0; j < itemArray.length - i - 1; j++) {
+
+                a = parseInt(itemArray[j].innerHTML);
+                b = parseInt(itemArray[j + 1].innerHTML);
+
+                if (a > b) {
+
+                    clearAnimation();
+                    panel.insertBefore(itemArray[j + 1], itemArray[j]);
+                    itemArray[j + 1].classList.add("grow");
+
+                    item = itemArray[j + 1];
+                    itemArray[j + 1] = itemArray[j];
+                    itemArray[j] = item;
+
+                    flag = 1;
+                }
+            }
+
+            i++;
+
+            if (flag == 1) flag = 0;
+            else clearInterval(handler);
+
+        }, 500);
+
+        return false;
+    }
+
+    /* 队列item被点击时的事件处理程序 */
+    function removeItem() {
+
+        var item = this;
+        var panel = document.getElementById("panel");
+
+        // 传统方式处理类好麻烦
+        var classes = item.className.split(" ");
+        classes.push("shrink");
+        item.className = classes.join(" ");
+
+        var handler = setTimeout(function () {
+
+            panel.removeChild(item);
+            clearTimeout(handler);
+
+        }, 600);
+
+    }
+
+    /* 为按钮绑定事件 */
+    function bindEventForBtn() {
+
+        document.getElementById("left-in").onclick = leftIn;
+        document.getElementById("right-in").onclick = rightIn;
+        document.getElementById("left-out").onclick = leftOut;
+        document.getElementById("right-out").onclick = rightOut;
+        document.getElementById("sort").onclick = sort;
+        document.getElementById("find").onclick=find;//对搜索按钮绑定点击事件
+        document.getElementById("clear").onclick = clear;
+        document.getElementById("init").onclick = init;
+
+    }
+
+    /*搜索按钮被点击时的事件处理程序*/
+    function find() {
+        var searchword = document.getElementById("search").value;//获得查询文本内容
+        var items=document.getElementById("panel").childNodes;//这里用children也可以（会忽视文本节点）。
+        for (var i = 0; i < items.length; i++) {
+            /*if(items[i].innerHTML.indexOf(searchword)>=0){//模糊匹配成功，会把文本变黑
+                items[i].style.color = 'black';
+            }*/
+            //或者用正则的方式
+            var pattern = new RegExp(searchword, "g");
+            if(pattern.test(items[i].innerHTML)){
+                items[i].style.color = 'black';
+            }
+        }
+
+    }
+
+    /* 为队列item绑定事件 */
+    function bindEventForItem(item) {
+
+        item.onclick = removeItem;
+
+    }
+
+    /* 创建一个item */
+    function createItem(height) {
+
+        var item = document.createElement("div");
+        var itemArray = [];
+        var text = document.getElementById("data").value; // 获取输入框的文本
+        document.getElementById("data").value = "";//清空输入文本
+
+        if (height){//如果有传入参数,即init步骤
+            text = height;
+            // 为 item 设置合适的高度
+            num = checkNum(text);
+            item.style.height = num + "px";
+            item.className = "item";
+            item.setAttribute("title", "点击删除");
+            item.innerHTML = text;
+            bindEventForItem(item);
+            itemArray.push(item);
+            return itemArray;
+        } else {//如果采用左侧入、右侧入模式
+            text=text.split(/[,，、；;\s]+/g);//回车，逗号（全角半角均可），顿号，空格（全角半角、Tab等均可）等符号
+
+            /*对于每一项内容，都创建div节点*/
+            for(var i=0;i<text.length;i++) {
+                item = document.createElement("div");
+                if(text[i]=="")//如果有空值，那么跳过
+                    continue;
+                var num=checkNum(text[i]);
+                if(!num) continue;//如果输入的为字母或者10-100之外的数字，那么就不增加该节点
+                item.className = "item";
+                item.setAttribute("title","点击删除");
+                item.innerHTML = text[i];
+                bindEventForItem(item);
+
+                item.style.height = num+ "px";
+                itemArray.push(item);
+            }
+            return itemArray;
+        }
+    }
+
+    /* 检查输入是否为数字，若为数字，则按比例放大 */
+    function checkNum(data) {
+        // 验证表单输入是否为数字
+        if (data == "" || isNaN(data)) {
+            alert("请输入数字！");
+            return null;
+        }
+        var num = parseInt(data);
+        if(num<10 || num>100){
+            alert("数字必须在10-100之间！");
+            return null;
+        }
+        num = 3 * num;
+        return num;
+    }
+
+    /* 初始化页面，创建几个item */
+    function init() {
+
+        var item, num;
+        var panel = document.getElementById("panel");
+
+        if (panel.childElementCount >= 60) {
+            alert("最多添加60条数据");
+            return false;
+        }
+
+        for (var i = 0; i < 10; i++) {
+            num = Math.floor(Math.random() * 100 % 100);//生成1-99的数
+            if (num < 10)
+                num += 10;
+            item = createItem(num)[0];//这里要改成创建的itemArray的第一个
+
+            panel.appendChild(item);
+        }
+
+    }
+
+    window.onload = function () {
+        init();
+        bindEventForBtn();
+    }
+
+</script>
+
+</body>
+
+</html>
