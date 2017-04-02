@@ -341,36 +341,58 @@
     /* 创建一个item */
     function createItem(height) {
 
-        var item = document.createElement("div");
         var text = document.getElementById("data").value; // 获取输入框的文本
-
-        if (height)
-            text = height + "";
-        else {
-            // 验证表单输入是否为数字
-            if (text == "" || isNaN(text)) {
-                alert("必需为数字");
-                return null;
-            }
+        var num;
+        if (height)//如果有传入参数(init)
+        {
+            text = height;
+            num = parseInt(text);//转成数字
+            //也可以写成这样
+            /*text=height;
+            num=height;*/
         }
-
-        var num = parseInt(text);
-        if (num < 10 || num > 100) {
-            alert("数字必需在10-100之间");
-            return null;
+        else {//如果采用左侧入、右侧入模式，就需要检验输入的是不是数字
+            num = checkNum(text);
         }
-
-        // 为 item 设置合适的高度
-        num = 3.9 * num;
-        item.style.height = num + "px";
-
-        document.getElementById("data").value = "";
+        var item = document.createElement("div");
+        num = 3 * num;
+        item.style.height = num + "px";//设置高度
+        //item.style.height = "50px";//设置固定高度
+        //item.setAttribute("height",num+"px");这个不起效果
+        item.style.width = "30px";//设置宽度，不设置会根据内容变宽
+        document.getElementById("data").value = "";//清空输入框
         item.className = "item";
         item.setAttribute("title", "点击删除");
         item.innerHTML = text;
         bindEventForItem(item);
-
         return item;
+    }
+
+    // 验证表单输入是否为数字,是否符合范围，如果符合要求，就返回该数字
+    function checkNum(text) {
+        if (text == "" || isNaN(text)) {
+            alert("必需为数字");
+            return null;
+        }
+        var num = parseInt(text);//转成数字
+        if (num < 10 || num > 100) {
+            alert("数字必需在10-100之间");
+            return null;
+        }
+        return num;
+    }
+
+    function setItemValue(num) {
+        // 为 item 设置合适的高度
+        var item = document.createElement("div");
+        num = 3 * num;
+        item.style.height = num + "px";//设置高度
+        item.style.width = "30px";//设置宽度，不设置会根据内容变宽
+        document.getElementById("data").value = "";//清空输入框
+        item.className = "item";
+        item.setAttribute("title", "点击删除");
+        item.innerHTML = text;
+        bindEventForItem(item);
     }
 
     /* 初始化页面，创建几个item */
@@ -392,7 +414,6 @@
 
             panel.appendChild(item);
         }
-
     }
 
     window.onload = function () {
