@@ -60,16 +60,17 @@ article span{
 
 .imgclass{
     float: left;
-    width:200px;
-    height:150px;
+    max-width:200px;
     border:1px solid #9b9696;
     text-align: center;
     margin: 10px;
 }
-.imgclass img{
-    width:80%;
+img{
+    width:50%;
 }
-
+.imgclass img{
+    width: 80%;
+}
 /*表格*/
 .section4 table{
     width:100%;
