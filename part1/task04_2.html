@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task04-2</title>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;/*没有设置的话会使得不会垂直居中*/
+            margin: 0;
+            padding: 0;
+        }
+
+        .father{
+            height: 200px;
+            width: 400px;
+            background-color: #ccc;
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            margin-top: -100px;
+        }
+        .left-top{
+            height: 50px;
+            width: 50px;
+            background-color: #fc0;
+            border-radius: 0 0 50px 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .right-bottom{
+            height: 50px;
+            width: 50px;
+            background-color: #fc0;
+            border-radius: 50px 0 0;
+            position: absolute;
+            left: 350px;
+            top: 150px;
+        }
+    </style>
+</head>
+<body>
+<div class="father">
+    <div class="left-top"></div>
+    <div class="right-bottom"></div>
+</div>
+</body>
+</html>
