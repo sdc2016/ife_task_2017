@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task03三栏式布局-自身浮动法</title>
+    <style>
+        *{
+            -webkit-box-sizing: border-box;/*元素的内边距和边框不再会增加它的宽度*/
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .clearfix{/*context的背景色能覆盖全部内容区域*/
+            overflow: auto;
+            zoom: 1;
+        }
+        html,body{
+            height: 100%;
+            margin: 0;
+        }
+        .content,.left,.middle,.right{
+            padding: 0 20px;
+            border:1px solid #999;
+        }
+        .left,.middle,.right{
+            background: white;
+        }
+        .content{
+            width:90%;
+            padding:20px;
+            background: #eee;
+            margin:20px auto;
+        }
+        .left{
+            float: left;
+            width: 200px;
+        }
+        .middle{
+            margin-left: 220px;
+            margin-right: 160px;
+        }
+        .right{
+            float: right;
+            width: 120px;
+        }
+        img{
+            display: block;
+            width: 80px;
+            height: 80px;
+            border:1px solid #999;
+            margin: 20px 0;
+        }
+        .left img,.left h3{
+            float: left;
+        }
+
+    </style>
+</head>
+<body>
+<div class="content clearfix">
+    <!--三个div标签的顺序的关键是要把主体div放在最后，左右两栏div顺序任意。-->
+    <!--不足在于：中间主体存在克星，clear:both属性。如果要使用此方法，需避免明显的clear样式。-->
+    <div class="left">
+        <img src="img/task03.png" alt="img">
+        <h3>团队名称</h3>
+    </div>
+    <div class="right">
+        <img src="img/task03.png" alt="img">
+        <img src="img/task03.png" alt="img">
+        <img src="img/task03.png" alt="img">
+        <img src="img/task03.png" alt="img">
+    </div>
+    <div class="middle">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, ducimus eligendi id laboriosam mollitia nostrum odit quia! Aliquam corporis explicabo ipsam iure nemo quas voluptas. Molestiae tempore ut voluptas voluptatum?</p>
+    </div>
+</div>
+</body>
+</html>
