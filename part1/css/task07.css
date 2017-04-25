@@ -1,0 +1,194 @@
+/*初始化*/
+body,div,dl,dt,dd,ul,li,h1,h2,h3,h4,h5,h6,input,form,a,p,textarea{
+    margin:0;
+    padding:0;
+    font-family: "微软雅黑","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+ol,ul,li{
+    list-style: none;
+}
+html,body{
+    font-size: 12px;
+}
+a{
+    text-decoration: none;
+    display: block;
+    color: #fff;
+}
+img{
+    border:none;
+    display: block;
+}
+button{
+    border: none;
+}
+
+.clearfix{
+    zoom: 1;
+}
+.clearfix:after{
+    display: block;
+    clear: both;
+    content: '';
+    visibility: hidden;
+    height: 0;
+}
+.main-wrapper{
+    width:1280px;
+    margin:0 auto;
+    background: #fff;
+}
+/*header*/
+header{
+    height: 56px;
+}
+header a{
+    display: inline-block;
+    height:56px;
+    font-size: 20px;
+    line-height: 56px;
+    color: #616161;
+}
+header .logo{
+    background: url("../img/task7-spite.png")no-repeat;
+}
+header .header-logo{
+    float: left;
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 40px;
+    width: 36px;
+    height: 36px;
+    background-position: 0 0;
+}
+
+header .header-nav{
+    float: right;
+}
+header .header-nav li{
+    float: left;
+    text-align: center;
+}
+header .header-nav  a{
+    display: inline-block;
+    width:64px;
+    font-size: 14px;
+    margin-right: 40px;
+}
+.active {
+    color: #e7504d;
+    border-bottom: 4px solid #e7504d;
+}
+header .header-login-logo{
+    display: inline-block;
+    width:20px;
+    height:20px;
+    background-position: -38px 4px;
+}
+/*banner*/
+.index-banner{
+    position: relative;
+    height: 726px;
+}
+.index-banner .index-banner-txt{
+    position: absolute;
+    top:228px;
+    left: 124px;
+    color: #fff;
+}
+.index-banner .index-banner-txt h1{
+    font-size: 46px;
+    font-weight: normal;
+}
+.index-banner .index-banner-txt p{
+    line-height: 20px;
+    font-size: 20px;
+}
+.index-banner .index-banner-txt button{
+    margin-top:30px;
+    font-size: 24px;
+    color: #fff;
+    padding:10px 60px;
+    background: #cc1b1b;
+}
+/*footer*/
+footer{
+    min-height:416px;
+    color: #fff;
+}
+footer .footer-contact{
+    min-height: 358px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 18px;
+    letter-spacing: 0.1em;
+    background: #32353e;
+}
+footer .footer-contact h2{
+    padding-top:90px;
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: normal;
+}
+.footer-contact form{
+    margin-top: 30px;
+    font-size: 0;
+}
+.footer-contact form #text_input{
+    width: 430px;
+    height:40px;
+    padding-left: 5px;
+    color: #bbbbbb;
+}
+.footer-contact form .btn{
+    cursor: pointer;
+    width:80px;
+    height: 43px;
+    color: #fff;
+    letter-spacing: 0.5em;
+    border:none;
+    background: #6f7278;
+}
+.footer-contact .share-group{
+    margin-top:36px;
+    display: inline-block;
+}
+ .footer-contact .share-group  .icon{
+     float: left;
+     margin-right: 25px;
+     width:30px;
+     height: 25px;
+     background: url("../img/task7-footer-icon.png")no-repeat;
+}
+.footer-contact .share-group .icon-share2{
+    background-position: 0 -30px;
+}
+.footer-contact .share-group .icon-share3{
+    background-position: 0 -56px;
+}
+.footer-contact .share-group .icon-share4{
+    background-position: 0 -85px;
+}
+.footer-contact .share-group  .icon a{
+    display: block;
+    width:100%;
+    height:100%;
+    cursor: pointer;
+}
+footer .footer-copy{
+    height: 58px;
+    color: #fff;
+    background: #2f3038;
+}
+
+.footer-info{
+    display: inline-block;
+    margin-left:98px;
+    margin-top: 25px;
+}
+footer .footer-copy a{
+    float: right;
+    display: inline-block;
+    margin-right:36px;
+    line-height: 58px;
+}
